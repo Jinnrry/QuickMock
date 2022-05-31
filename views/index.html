@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>QuickMock --快速接口Mock平台</title>
+</head>
+<script src="jquery3.js"></script>
+<script src="vue2.js"></script>
+<body>
+
+<div id="app">
+    <table width="800px" align="center" border="1" cellspacing="0">
+        <tr>
+            <td colspan="3" align="center">Mock接口列表</td>
+        </tr>
+
+        <tr>
+            <td align="center" width="30%">接口</td>
+            <td align="center" width="50%">MockApi地址</td>
+            <td align="center" width="20%">操作</td>
+        </tr>
+
+        <tr v-for="api in apis">
+            <td align="center" width="30%">{{api.api_path}}</td>
+            <td align="center" width="50%"><a target="_blank" v-bind:href="api.request_url">
+                {{api.request_url}} </a></td>
+            <td align="center" width="20%">
+                <a href="#" @click="del(api.api_path)">删除</a>
+                <a :href="'/edit.html?path='+  api.api_path">编辑</a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+</body>
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            apis: [],
+            serverIp: ""
+        },
+        methods: {
+            del: function (path) {
+                let that = this;
+
+                if (confirm("确认删除？")) {
+                    $.post("/delete", {path: path}, function (data) {
+                        if (data.success === 0) {
+                            that.loadData()
+                        } else {
+                            alert(data.msg)
+                        }
+                    })
+                }
+
+
+            },
+            loadData: function () {
+                let that = this;
+                $.get("/apiList", function (data) {
+                    if (data.success === 0) {
+                        that.apis = data.data
+                        that.serverIp = data.server_ip
+                    } else {
+                        alert("server error!")
+                    }
+                })
+            }
+        },
+        created: function () {
+            this.loadData()
+        }
+    })
+
+
+</script>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>QuickMock --快速接口Mock平台</title>
+</head>
+<script src="jquery3.js"></script>
+<script src="vue2.js"></script>
+<body>
+
+
+<div id="app">
+    <table width="800px" align="center" border="1" cellspacing="0">
+        <tr>
+            <td colspan="2" align="center">新增接口</td>
+        </tr>
+        <tr>
+            <td width="30%">接口地址</td>
+            <td width="70%"><input v-model="apiPath" style="width: 560px;" type="text" placeholder="/user/get"></td>
+        </tr>
+
+        <tr>
+            <td width="30%">Mock返回状态码</td>
+            <td width="70%"><input v-model="httpCode" style="width: 560px;" type="number" placeholder="200" value="200">
+            </td>
+        </tr>
+
+        <tr>
+            <td width="30%">延迟返回时间(毫秒)</td>
+            <td width="70%"><input v-model="wait" style="width: 560px;" type="number" placeholder="0" value="0"></td>
+        </tr>
+
+        <tr>
+            <td width="30%">请求方法(多种方法使用|隔开)</td>
+            <td width="70%"><input v-model="methods" style="width: 560px;" type="text" placeholder="GET|POST"
+                                   value="GET|POST"></td>
+        </tr>
+
+
+        <tr>
+            <td width="30%">Mock返回值</td>
+            <td width="70%"><textarea v-model="response" style="width: 560px;height: 300px;" type="text"
+                                      placeholder='{"success":"1"}'></textarea></td>
+        </tr>
+
+        <tr>
+            <td width="30%">Mock响应头</td>
+            <td width="70%"><textarea v-model="responseHead" style="width: 560px;height: 300px;" type="text"
+                                      placeholder=' {
+    "Content-Type": "json; charset=UTF-8",
+    "TestId": "111"
+ }'></textarea></td>
+        </tr>
+
+        <tr>
+            <td width="30%">自定义处理脚本</td>
+            <td width="70%"><textarea v-model="script" style="width: 560px;height: 300px;" type="text" placeholder="// 使用 JavaScript 语法
+// 支持变量：
+// PostForm 请求的Post表单数据;
+// RequestHeader http请求头
+// RequestBody 请求原始Body体
+// Wait 延迟返回时间
+// ResponseHeader  http响应头
+// HttpCode http响应状态码
+// Response http响应body体
+// 如果需要修改返回数据，直接修改对应变量值即可">
+
+            </textarea></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center"><input @click="submit" type="button" value="提交"></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            apiPath: "",
+            httpCode: 200,
+            wait: 0,
+            methods: "GET|POST",
+            response: "",
+            responseHead: "",
+            script: ""
+        },
+        methods: {
+            submit: function () {
+                let that = this;
+                $.post("/upsert", {
+                    apiPath: that.apiPath,
+                    httpCode: that.httpCode,
+                    wait: that.wait,
+                    methods: that.methods,
+                    response: that.response,
+                    responseHead: that.responseHead,
+                    script: that.script
+                }, function (data) {
+                    if (data.success === 0) {
+                        alert("添加成功")
+                        window.location.href = "/";
+                    } else {
+                        alert(data.msg)
+                    }
+                },"json");
+            }
+        },
+        created: function () {
+        }
+    })
+
+
+</script>
+</html>
