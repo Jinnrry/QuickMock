@@ -27,7 +27,7 @@ step2、双击运行文件
 
 ## 技术栈
 
-vue.js+jquery+golang
+vue.js + golang
 
 
 
