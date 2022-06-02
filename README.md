@@ -16,7 +16,7 @@ step1、从[releases](https://github.com/Jinnrry/QuickMock/releases)列表中下
 
 step2、双击运行文件
 
-step3、浏览器打开http://127.0.0.1:8080进入接口管理页面
+step3、浏览器打开 http://127.0.0.1:8080 进入接口管理页面
 
 可选步骤：
     使用`QuickMock help`查看启动命令介绍
