@@ -28,7 +28,7 @@ type ApiInfo struct {
 func GetApiInfo(apiPath string) (*ApiInfo, error) {
 	ret := &ApiInfo{}
 	// 加载设置文件
-	dataPath := strings.Replace(apiPath, "/", "|||", -1)
+	dataPath := strings.Replace(apiPath, "/", config.Separator, -1)
 	filePtr, err := os.Open(config.RunConfig.DataPath + dataPath + "/settings.json")
 	if err != nil {
 		return nil, errors.New("接口不存在")

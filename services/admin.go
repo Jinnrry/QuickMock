@@ -17,7 +17,7 @@ func UpsertApi(apiPath string, info *ApiInfo) error {
 		apiPath = "/" + apiPath
 	}
 
-	dataPath := strings.Replace(apiPath, "/", "|||", -1)
+	dataPath := strings.Replace(apiPath, "/", config.Separator, -1)
 
 	_ = os.MkdirAll(config.RunConfig.DataPath+dataPath, 0777)
 
@@ -48,7 +48,7 @@ func GetApiList() ([]apiItem, error) {
 		return nil, err
 	}
 	for _, file := range dirList {
-		apiPath := strings.Replace(file.Name(), "|||", "/", -1)
+		apiPath := strings.Replace(file.Name(), config.Separator, "/", -1)
 
 		if config.RunConfig.ApiServerPort != 80 {
 			api = append(api, apiItem{
@@ -67,7 +67,7 @@ func GetApiList() ([]apiItem, error) {
 }
 
 func DeleteApi(path string) error {
-	dataPath := strings.Replace(path, "/", "|||", -1)
+	dataPath := strings.Replace(path, "/", config.Separator, -1)
 	dirPath := config.RunConfig.DataPath + dataPath
 	return os.RemoveAll(dirPath)
 }

@@ -107,10 +107,32 @@
                     } else {
                         alert(data.msg)
                     }
-                },"json");
+                }, "json");
+            },
+            getUrlKey: function (name) {
+                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
             }
         },
         created: function () {
+            let that = this;
+            let path = this.getUrlKey("path");
+
+            this.apiPath = path;
+
+            if (path != "") {
+                $.get("/apiDetail", {api: path}, function (ret) {
+                    if (ret.success === 0) {
+                        that.httpCode = ret.data.http_code;
+                        that.wait = ret.data.wait;
+                        that.methods = ret.data.method;
+                        that.response = ret.data.response;
+                        that.responseHead = ret.data.header;
+                        that.script = ret.data.custom_function;
+                    }
+                }, "json")
+            }
+
+
         }
     })
 

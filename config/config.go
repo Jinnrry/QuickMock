@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+const Separator = "```"
+
 type Config struct {
 	ApiServerPort   int
 	AdminServerPort int
