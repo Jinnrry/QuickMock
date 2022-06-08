@@ -19,9 +19,10 @@ step2、双击运行文件
 step3、浏览器打开 http://127.0.0.1:8080 进入接口管理页面
 
 可选步骤：
-    1、修改启动端口，修改数据文件位置等（请使用`QuickMock help`查看介绍）
-    
-    2、如果是macos或者linux，先执行`chomd +x QuickMock`添加文件的执行权限
+
+1、修改启动端口，修改数据文件位置等（请使用`QuickMock help`查看介绍）    
+
+2、如果是macos或者linux，先执行`chomd +x QuickMock`添加文件的执行权限
     
 
 
